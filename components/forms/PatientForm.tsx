@@ -9,6 +9,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/formValidation";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -21,12 +22,13 @@ export enum FormFieldType {
   FILE = "file",
   IMAGE = "image",
   PHONE_INPUT = "phone_input",
+  DATE_PICKER = "date_picker",
+  SKELETON = "skeleton",
 }
 
 export function PatientForm() {
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  // 1. Define your form.
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -34,25 +36,19 @@ export function PatientForm() {
       email: "",
       phone: "",
     },
-  });
-
-  // 2. Define a submit handler.
-  async function onSubmit({ name,email, phone }: z.infer<typeof UserFormValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  })
+ 
+  async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
-    try {
-      // const userData = {
-      //   name,
-      //   email,
-      //   phone,
-      // };
-      // const user = await createUser(userData);
-      // if (user) router.push(`/patients/${user.id}/register`);
 
-      // console.log(userData);
+    try {
+      const userData ={ name, email, phone };
+
+      const user = await createUser(userData);
+
+      if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
   return (
