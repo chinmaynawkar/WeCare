@@ -22,6 +22,8 @@ export enum FormFieldType {
   FILE = "file",
   IMAGE = "image",
   PHONE_INPUT = "phone_input",
+  DATE_PICKER = "date_picker",
+  SKELETON = "skeleton",
 }
 
 export function PatientForm() {
