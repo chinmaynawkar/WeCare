@@ -50,6 +50,12 @@ export const createUser = async (user: CreateUserParams) => {
     }
 }
 
+/**
+ * Retrieves a user by their user ID.
+ * 
+ * @param {string} userId - The ID of the user to retrieve.
+ * @returns {Promise<string | undefined>} A stringified user object, or undefined if an error occurs.
+ */
 export const getUser = async (userId: string) => {
     try {
       const user = await users.get(userId);
@@ -57,11 +63,14 @@ export const getUser = async (userId: string) => {
     } catch (error) {
       console.log(error)
     }
+}
 
-
-  }
-
-// REGISTER PATIENT
+/**
+ * Registers a new patient with the provided information and optional identification document.
+ * 
+ * @param {RegisterUserParams} params - The patient registration data, including an optional identification document.
+ * @returns {Promise<string | undefined>} A stringified patient object, or undefined if an error occurs.
+ */
 export const registerPatient = async ({
     identificationDocument,
     ...patient
@@ -99,3 +108,22 @@ export const registerPatient = async ({
       console.error("An error occurred while creating a new patient:", error);
     }
   };
+
+/**
+ * Retrieves a patient by their user ID.
+ * 
+ * @param {string} userId - The ID of the user associated with the patient.
+ * @returns {Promise<string | undefined>} A stringified patient object, or undefined if an error occurs.
+ */
+export const getPatient = async (userId: string) => {
+    try {
+      const patients = await database.listDocuments(
+        DATABASE_ID!,
+        PATIENT_COLLECTION_ID!,
+        [Query.equal('userId', [userId])]
+      );
+      return parseStringify(patients.documents[0]); // Convert user object to string
+    } catch (error) {
+      console.log(error)
+    }
+}
