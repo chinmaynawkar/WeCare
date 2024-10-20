@@ -3,10 +3,13 @@ import { PatientForm } from "@/components/forms/PatientForm";
 import Link from "next/link";
 import WeCare from '@/public/assets/svg/logo-no-background.svg'
 import Doc5 from '@/public/assets/icons/doc5.jpg'
+import { PasskeyModal } from "@/components/Passkey";
 
-export default function Home() {
+export default function Home({searchParams}: SearchParamProps) {
+  const isAdmin = searchParams.admin === 'true'
   return (
     <div className="flex h-screen max-h-screen">
+      {isAdmin && <PasskeyModal />}
       {/* TODO: OTP Verfication | Passkey */}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">

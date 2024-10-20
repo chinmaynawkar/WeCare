@@ -87,7 +87,7 @@ export function PatientForm() {
           iconSrc="/assets/icons/phone.svg"
           iconAlt="phone"
         />
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <SubmitButton isLoading={isLoading} className="!bg-yellow-500 hover:!bg-yellow-600 !text-black w-full">Get Started</SubmitButton>
       </form>
     </Form>
   );

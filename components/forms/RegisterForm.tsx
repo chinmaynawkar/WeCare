@@ -342,7 +342,7 @@ export function RegisterForm({ user }: { user: User }) {
           />
         </section>
 
-        <SubmitButton isLoading={isLoading}> Get started</SubmitButton>
+        <SubmitButton isLoading={isLoading} className="bg-yellow-500 hover:bg-yellow-600 text-black w-full"> Get started</SubmitButton>
       </form>
     </Form>
   );
