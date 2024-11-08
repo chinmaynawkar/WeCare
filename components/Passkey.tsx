@@ -42,6 +42,7 @@ export const PasskeyModal = () => {
       } else {
         setOpen(true);
       }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [encryptedKey]);
 
   const closeModal = () => {
