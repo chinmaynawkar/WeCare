@@ -1,8 +1,8 @@
 'use server';
 
 import { ID, Query } from "node-appwrite";
-import { APPOINTMENT_COLLECTION_ID, database, DATABASE_ID } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { APPOINTMENT_COLLECTION_ID, database, DATABASE_ID, messaging } from "../appwrite.config";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
 
@@ -141,10 +141,32 @@ export const updateAppointment = async ({
         }
 
         // TODO: Send notification to the patient
+        const smsMessage =  `Hi from WeCare.
+        ${type === 'schedule' ? `Your appointment has been scheduled for ${formatDateTime(updatedAppointment.schedule!)}`
+            : `We regret to inform you that your appointment has been cancelled. Reason: ${updatedAppointment.cancellationReason}`
+        }`;
+
+        await sendSMSNotification(userId, smsMessage);
+
         revalidatePath("/admin"); // Revalidate the admin page to reflect the updated appointment
         return parseStringify(updatedAppointment);
 
     } catch (error) {
         console.error("An error occurred while updating the appointment:", error);
+    }
+}
+
+export const sendSMSNotification = async (userId: string, content: string) => {
+    try {
+        const message = await messaging.createSms(
+            ID.unique(),
+            content,
+            [],
+            [userId]
+        )
+
+        return parseStringify(message);
+    } catch (error) {
+        console.error("An error occurred while sending the SMS notification:", error);
     }
 }
