@@ -11,14 +11,15 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  # Add Appwrite environment variables
-  NEXT_PUBLIC_APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
-  NEXT_PUBLIC_APPWRITE_DATABASE_ID: ${{ secrets.APPWRITE_DATABASE_ID }}
-  NEXT_PUBLIC_APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
+  # Match exact names from appwrite.config.ts
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  API_KEY: ${{ secrets.API_KEY }}
+  DATABASE_ID: ${{ secrets.DATABASE_ID }}
   PATIENT_COLLECTION_ID: ${{ secrets.PATIENT_COLLECTION_ID }}
   DOCTOR_COLLECTION_ID: ${{ secrets.DOCTOR_COLLECTION_ID }}
   APPOINTMENT_COLLECTION_ID: ${{ secrets.APPOINTMENT_COLLECTION_ID }}
   NEXT_PUBLIC_BUCKET_ID: ${{ secrets.NEXT_PUBLIC_BUCKET_ID }}
+  NEXT_PUBLIC_ENDPOINT: ${{ secrets.NEXT_PUBLIC_ENDPOINT }}
 
 jobs:
   verify:
