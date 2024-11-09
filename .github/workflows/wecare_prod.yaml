@@ -11,6 +11,14 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  # Add Appwrite environment variables
+  NEXT_PUBLIC_APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
+  NEXT_PUBLIC_APPWRITE_DATABASE_ID: ${{ secrets.APPWRITE_DATABASE_ID }}
+  NEXT_PUBLIC_APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
+  PATIENT_COLLECTION_ID: ${{ secrets.PATIENT_COLLECTION_ID }}
+  DOCTOR_COLLECTION_ID: ${{ secrets.DOCTOR_COLLECTION_ID }}
+  APPOINTMENT_COLLECTION_ID: ${{ secrets.APPOINTMENT_COLLECTION_ID }}
+  NEXT_PUBLIC_BUCKET_ID: ${{ secrets.NEXT_PUBLIC_BUCKET_ID }}
 
 jobs:
   verify:
@@ -31,6 +39,7 @@ jobs:
         run: |
           npm i --package-lock-only
           npm ci
+          npm install sharp  # Add sharp installation
 
       #Run ESLint
       - name: Run ESLint
